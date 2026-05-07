@@ -1461,6 +1461,7 @@ void setup()
   btnPrevious.setTickMode(false);
   pinMode(btn_ok_pin, INPUT_PULLUP);
   pinMode(btn_next_pin, INPUT_PULLUP);
+  pinMode(btn_prev_pin, INPUT);
   btnOK.setClickTimeout(200);
   btnNext.setClickTimeout(200);
   btnPrevious.setClickTimeout(200);
