@@ -18,8 +18,8 @@
 #define OLED_RESET -1
 #define EEPROM_SIZE 512
 
-#define default_ssid "jammer"
-#define default_password "W0rthlessS0ul"
+#define default_ssid "STARLINK"
+#define default_password "Pepe1234"
 #define Version_Number "V3.2.0"
 #define Version_Name "Flexible"
 
@@ -60,10 +60,20 @@ inline int  channel2 = 0;
 inline int  flag     = 0;
 inline bool hspi     = false;
 
+inline const int oled_sda_pin  = 4;
+inline const int oled_scl_pin  = 5;
+inline const int hspi_mosi_pin = 13;
+inline const int hspi_miso_pin = 12;
+inline const int hspi_sck_pin  = 14;
+inline const int nrf1_ce_pin   = 25;
+inline const int nrf1_csn_pin  = 26;
+inline const int nrf2_ce_pin   = 27;
+inline const int nrf2_csn_pin  = 16;
+
 inline SPIClass        *hp = nullptr;
-inline GButton          btnOK(25);
-inline GButton          btnNext(26);
-inline GButton          btnPrevious(27);
+inline GButton          btnOK(32);
+inline GButton          btnNext(33);
+inline GButton          btnPrevious(34);
 inline WebServer        server(80);
 inline DNSServer        dnsServer;
 inline Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
