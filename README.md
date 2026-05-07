@@ -129,6 +129,49 @@ To bring this project to life, you will need the following components:
 | NEXT (Optional)             | GPIO 26       |
 | PREVIOUS (Optional)            | GPIO 27       |
 
+### 128x64_Flexible on Lolin32 Lite (recommended mapping)
+
+#### OLED Display (SSD1306)
+| **Pin Name** | **Lolin32 Lite GPIO** |
+|--------------|------------------------|
+| SDA          | GPIO 4                 |
+| SCL          | GPIO 5                 |
+| VCC          | 3.3V                   |
+| GND          | GND                    |
+
+#### nRF24 #1 Module (HSPI)
+| **Pin Name** | **Lolin32 Lite GPIO** |
+|--------------|------------------------|
+| MOSI         | GPIO 13                |
+| MISO         | GPIO 12                |
+| SCK          | GPIO 14                |
+| CE           | GPIO 25                |
+| CSN          | GPIO 26                |
+| VCC          | 3.3V                   |
+| GND          | GND                    |
+
+#### nRF24 #2 Module (optional, HSPI shared)
+| **Pin Name** | **Lolin32 Lite GPIO** |
+|--------------|------------------------|
+| MOSI         | GPIO 13 (shared)       |
+| MISO         | GPIO 12 (shared)       |
+| SCK          | GPIO 14 (shared)       |
+| CE           | GPIO 27                |
+| CSN          | GPIO 16                |
+| VCC          | 3.3V                   |
+| GND          | GND                    |
+
+#### Buttons (internal pull-ups, active LOW)
+| **Button** | **Lolin32 Lite GPIO** |
+|------------|-------------------------|
+| OK         | GPIO 32                 |
+| NEXT       | GPIO 33                 |
+
+#### LED
+| **Signal** | **Lolin32 Lite GPIO** |
+|------------|-------------------------|
+| Status LED | GPIO 2                  |
+
 ![Flexible](schemes/Flexible/scheme.png)
 
 ###### In all configurations the same SCK, MOSI, and MISO pins are used. This is not a mistake—SPI interfaces can share clock and data lines, while proper operation is ensured by separate control signals (CSN and CE)

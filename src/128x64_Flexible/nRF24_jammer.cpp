@@ -70,6 +70,10 @@ void updateDisplay(int menuNum)
 void handlernRF24Pins()
 {
   nrf24_count     = server.arg("count").toInt();
+  if ( nrf24_count < 1 )
+    nrf24_count = 1;
+  if ( nrf24_count > 2 )
+    nrf24_count = 2;
   String ceStr    = server.arg("ce");
   String csnStr   = server.arg("csn");
   auto   SplitStr = [](const String &str, int *arr, int maxCount) {
@@ -102,16 +106,49 @@ void handlernRF24Pins()
 
 void handlenRF24Init()
 {
+  bool configChanged = false;
   nrf24_count = EEPROM.read(134);
-  if ( nrf24_count > 30 )
+  if ( nrf24_count == 255 )
   {
-    nrf24_count = 0;
+    nrf24_count = 1;
+    ce_pins[0]  = nrf1_ce_pin;
+    csn_pins[0] = nrf1_csn_pin;
+    EEPROM.write(74, ce_pins[0]);
+    EEPROM.write(104, csn_pins[0]);
+    EEPROM.write(134, nrf24_count);
+    EEPROM.commit();
     return;
+  }
+  if ( nrf24_count > 2 )
+  {
+    nrf24_count = 2;
+    configChanged = true;
   }
   for ( int i = 0; i < nrf24_count; i++ )
   {
     ce_pins[i]  = EEPROM.read(74 + i);
     csn_pins[i] = EEPROM.read(104 + i);
+    if ( ce_pins[i] == 255 || csn_pins[i] == 255 )
+    {
+      if ( i == 0 )
+      {
+        ce_pins[i]  = nrf1_ce_pin;
+        csn_pins[i] = nrf1_csn_pin;
+      }
+      else
+      {
+        ce_pins[i]  = nrf2_ce_pin;
+        csn_pins[i] = nrf2_csn_pin;
+      }
+      EEPROM.write(74 + i, ce_pins[i]);
+      EEPROM.write(104 + i, csn_pins[i]);
+      configChanged = true;
+    }
+  }
+  if ( configChanged )
+  {
+    EEPROM.write(134, nrf24_count);
+    EEPROM.commit();
   }
 }
 
@@ -1294,7 +1331,7 @@ void setup()
   {
     if ( EEPROM.read(i) == 255 )
     {
-      EEPROM.write(i, 0);
+      EEPROM.write(i, i == eeprom_buttons_address ? default_buttons_mode : 0);
     }
   }
 
@@ -1422,12 +1459,16 @@ void setup()
   btnOK.setTickMode(false);
   btnNext.setTickMode(false);
   btnPrevious.setTickMode(false);
+  pinMode(btn_ok_pin, INPUT_PULLUP);
+  pinMode(btn_next_pin, INPUT_PULLUP);
+  pinMode(btn_prev_pin, INPUT);
   btnOK.setClickTimeout(200);
   btnNext.setClickTimeout(200);
   btnPrevious.setClickTimeout(200);
   btnOK.setTimeout(600);
   btnNext.setTimeout(600);
   btnPrevious.setTimeout(600);
+  Wire.begin(oled_sda_pin, oled_scl_pin);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextColor(WHITE);
   display.setTextSize(1);

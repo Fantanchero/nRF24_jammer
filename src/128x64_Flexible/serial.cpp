@@ -889,20 +889,26 @@ bool handleSetNrf24Command(String *args, int argCount, bool web_command, String 
     {
       printLine("    Module " + String(i) + ": CE=" + String(ce_pins[i]) + ", CSN=" + String(csn_pins[i]), response, web_command);
     }
-    printLine("Usage: set nrf24 <ce1,csn1> [<ce2,csn2> ...]", response, web_command);
-    printLine("Example: set nrf24 9,10 5,6", response, web_command);
+    printLine("Usage: set nrf24 <ce1,csn1> [<ce2,csn2>]", response, web_command);
+    printLine("Example: set nrf24 25,26 27,16", response, web_command);
+    printLine("Maximum modules: 2", response, web_command);
     printLine("", response, web_command);
     return true;
   }
+  if ( argCount > 4 )
+  {
+    printLine("Only up to 2 nRF24 modules are supported in this build", response, web_command);
+    return true;
+  }
 
-  String pinPairs[30];
+  String pinPairs[2];
   int    pairCount = 0;
-  for ( int i = 2; i < argCount && pairCount < 30; i++ )
+  for ( int i = 2; i < argCount && pairCount < 2; i++ )
   {
     pinPairs[pairCount++] = args[i];
   }
 
-  int  new_ce[30], new_csn[30];
+  int  new_ce[2], new_csn[2];
   bool valid = true;
   for ( int i = 0; i < pairCount; i++ )
   {

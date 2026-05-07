@@ -28,7 +28,7 @@ void DeinitRadios(bool stopConstCarrier)
 void HSPI_init()
 {
   hp = new SPIClass(HSPI);
-  hp->begin();
+  hp->begin(hspi_sck_pin, hspi_miso_pin, hspi_mosi_pin);
   hp->setFrequency(16000000);
   hp->setBitOrder(MSBFIRST);
   hp->setDataMode(SPI_MODE0);
