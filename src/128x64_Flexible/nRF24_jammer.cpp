@@ -1331,7 +1331,7 @@ void setup()
   {
     if ( EEPROM.read(i) == 255 )
     {
-      EEPROM.write(i, i == 9 ? 1 : 0);
+      EEPROM.write(i, i == eeprom_buttons_address ? default_buttons_mode : 0);
     }
   }
 
@@ -1459,8 +1459,8 @@ void setup()
   btnOK.setTickMode(false);
   btnNext.setTickMode(false);
   btnPrevious.setTickMode(false);
-  pinMode(32, INPUT_PULLUP);
-  pinMode(33, INPUT_PULLUP);
+  pinMode(btn_ok_pin, INPUT_PULLUP);
+  pinMode(btn_next_pin, INPUT_PULLUP);
   btnOK.setClickTimeout(200);
   btnNext.setClickTimeout(200);
   btnPrevious.setClickTimeout(200);

@@ -62,6 +62,9 @@ inline bool hspi     = false;
 
 inline const int oled_sda_pin  = 4;
 inline const int oled_scl_pin  = 5;
+inline const int btn_ok_pin    = 32;
+inline const int btn_next_pin  = 33;
+inline const int btn_prev_pin  = 34;
 inline const int hspi_mosi_pin = 13;
 inline const int hspi_miso_pin = 12;
 inline const int hspi_sck_pin  = 14;
@@ -69,11 +72,13 @@ inline const int nrf1_ce_pin   = 25;
 inline const int nrf1_csn_pin  = 26;
 inline const int nrf2_ce_pin   = 27;
 inline const int nrf2_csn_pin  = 16;
+inline const int eeprom_buttons_address      = 9;
+inline const int default_buttons_mode        = 1;
 
 inline SPIClass        *hp = nullptr;
-inline GButton          btnOK(32);
-inline GButton          btnNext(33);
-inline GButton          btnPrevious(34);
+inline GButton          btnOK(btn_ok_pin);
+inline GButton          btnNext(btn_next_pin);
+inline GButton          btnPrevious(btn_prev_pin);
 inline WebServer        server(80);
 inline DNSServer        dnsServer;
 inline Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
